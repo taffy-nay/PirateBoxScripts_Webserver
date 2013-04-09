@@ -23,7 +23,7 @@ if [ "$2" = "enable" ] ; then
   MESH_NET="$IP1"."$IP2"."$IP3"
   MESH_IP=$IP4
   MESH_START_DHCP=$(( $IP4 + 5 ))
-  MESH_END_DHCP=$(( $IP4 + 30 ))
+  MESH_END_DHCP=$(( $MESH_START_DHCP + 30 ))
 
   sed "s:NET=$NET:NET=$MESH_NET"               -i  $PIRATEBOX_CONF
   sed "s:NETMASK=$NETMASK:NETMASK=255.0.0.0"   -i  $PIRATEBOX_CONF
