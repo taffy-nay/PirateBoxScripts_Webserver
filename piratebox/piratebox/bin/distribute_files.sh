@@ -1,5 +1,8 @@
 #!/bin/sh
 
+#  Matthias Strubel (c) 2014  - GPL3
+#   matthias.strubel@aod-rpg.de
+#
 # This script distributes a set of files into $1 folder
 
 #Script for single stuff
@@ -28,7 +31,7 @@ destination=$1
 overwrite=$2
 overwrite=${overwrite:=false}
 src_file=$3
-src_file=${src_file:=all}
+src_file=${src_file:="all"}
 
 $DEBUG && echo "parameters:
   destination $destination
@@ -38,7 +41,7 @@ $DEBUG && echo "parameters:
   call script: $script
  ";
 
-if [ "$src_file" == "all" ] ; then
+if [ "$src_file" = "all" ] ; then
 	work_on_file $destination $PIRATEBOX_FOLDER/src/HEADER.txt
 	work_on_file $destination $PIRATEBOX_FOLDER/src/README.txt
 else 

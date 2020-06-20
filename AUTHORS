@@ -1,18 +1,34 @@
-Based on idea of David Darts:  http://wiki.daviddarts.com/PirateBox
+Based on idea of David Darts:  http://daviddarts.com
 
 Script collection by:
    Matthias Strubel  http://piratebox.aod-rpg.de
 
 Live CD & Installer by:
-   TerrorByte 
+   TerrorByte ~ Cale Blac k
 
 Contributors for modifications:
-   * Droopy
+       # stylesuxx   - Makefile and development support
+       # FriedZombie - OpenWRT and scripting support
        # someguy   - Droopy Directory support
        # Reventlov - Modification for better iOS Support
-   * python Forum
        # someguy  - Modifications for running on OpenWRT
        # ToM'aSs  - Languag-Support
+       # Liblor   - Fixes	
+       # Loris Reiff
+       # iamarf
+       # denis-d
+       # taffy-nay
+       # risca
+       # herr-gabriel
+       # Jess Stubenbord
+       # Mike Weaver
+       # bartschat  - RTC RPi feature
+       # casdr
+       # jdieg0
+       # a-ira 
+       # ponsfrilus
+       # ... and all others I might have forgotten.
+
 
 Design:
    * David Brooks

@@ -1,14 +1,5 @@
 $(document).ready(function() {
-   	// do stuff when DOM is ready
-   	$.get('forum.html', function(data) {
-        $('div#forum_link').html(data);
-    });
-   	
-   	$.get('forban_link.html', function(data) {
-        $('div#forban_link').html(data);
-    });
-	
-	$.get('station_cnt.txt', function(data) {
+	$.get('/station_cnt.txt', function(data) {
         $('div#station').html(data);
     });
    	
@@ -22,7 +13,19 @@ $(document).ready(function() {
 	    post_shoutbox();
     });
 
+        $("#du_form").submit(function(event) {
+            /* stop form from submitting normally */
+        event.preventDefault();
+        post_diskusage();
+    });
+
+    display_diskusage();
     display_shoutbox();
+
+   // Add Tooltips
+    if ( $('#du_form_button').lenght ) {
+	    $('#du_form_button').tooltip();
+    }
 
     // Spin menu icon and toggle nav
     $('#menu-icon').click(function() {
@@ -53,6 +56,7 @@ $(document).ready(function() {
         }
     });
     
+    post_diskusage();
 
     // smooth scrolling for internal links
     function filterPath(string) {
@@ -64,7 +68,7 @@ $(document).ready(function() {
         var locationPath = filterPath(location.pathname);
         var scrollElem = scrollableElement('html', 'body');
      
-        $('a[href*=#]').each(function() {
+        $('a[href*=\\#]').each(function() {
             var thisPath = filterPath(this.pathname) || locationPath;
             if (  locationPath == thisPath
             && (location.hostname == this.hostname || !this.hostname)
@@ -103,7 +107,7 @@ $(document).ready(function() {
 });
 
 function refresh_shoutbox () {
-    $.get('chat_content.html', function(data) {
+    $.get('/chat_content.html', function(data) {
    		$('div#shoutbox').html(data);
    	});
 }
@@ -114,16 +118,52 @@ function refresh_time_sb () {
 }
 
 function post_shoutbox () {
-	$.post("/cgi-bin/psowrte.py" , $("#sb_form").serialize())
-	.success(function() { 
-		refresh_shoutbox(); 
-	});
-	$('#shoutbox-input .message').val('');
+        $("#send-button").prop('value', 'Sending...');
+        $("#send-button").prop('disabled', true);
+
+        $.post("/cgi-bin/psowrte.py" , $("#sb_form").serialize())
+        .success(function() {
+                refresh_shoutbox();
+                $("#send-button").prop('value', 'Send')
+                $("#send-button").prop('disabled', false);
+        });
+        $('#shoutbox-input .message').val('');
 }
 
 function display_shoutbox() {
 	refresh_shoutbox();
 	refresh_time_sb();
+}
+
+function refresh_diskusage() {
+    $.get('/diskusage.html', function(data) {
+                $('div#diskusage').html(data);
+        });
+}
+
+function refresh_time_du () {
+    // Refresh rate in milli seconds
+    mytimedu=setTimeout('display_diskusage()', 10000);
+}
+
+function post_diskusage() {
+	$("#du_form_button").prop('value', 'Refreshing...');
+	$("#du_form_button").prop('disabled', true);
+
+        $.post("/cgi-bin/diskwrite.py")
+        .success(function() {
+                refresh_diskusage();
+            $("#du_form_button").prop('value', 'Refresh');
+            $("#du_form_button").prop('disabled', false);
+        });
+        $('#diskusage-input .message').val('');
+
+
+}
+
+function display_diskusage() {
+        refresh_diskusage();
+        refresh_time_du();
 }
 
 function fnGetDomain(url) {

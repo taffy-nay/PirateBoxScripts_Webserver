@@ -15,9 +15,12 @@
 #       COMPANY:  ---
 #       CREATED: 02.02.2013 19:50:34 MST
 #      REVISION:  0.3.1
+#       LICENCE: (c) Cale Black, 2013 GPL-3
 #=======================================================================
 #Import PirateBox conf
 CURRENT_CONF=piratebox/conf/piratebox.conf
+scriptfile="$(readlink -f $0)"
+CURRENT_DIR="$(dirname ${scriptfile})"
 
 #Must be root
 if [[ $EUID -ne 0 ]]; then
@@ -32,7 +35,7 @@ else
 	exit 0
 fi
 
-if [[ -f  $CURRENT_CONF ]]; then
+if [[ -f  "$CURRENT_DIR"/$CURRENT_CONF ]]; then
 	. $CURRENT_CONF 2> /dev/null
 else
 	echo "PirateBox config is not in its normal directory"
@@ -44,7 +47,7 @@ if [[ ! -d /opt ]]; then
 	mkdir -p /opt
 fi
 
-cp -rv piratebox/piratebox /opt &> /dev/null
+cp -rv "$CURRENT_DIR"/piratebox /opt &> /dev/null
 echo "Finished copying files..."
 echo "$NET.$IP_SHORT piratebox.lan">>/etc/hosts
 echo "$NET.$IP_SHORT piratebox">>/etc/hosts
